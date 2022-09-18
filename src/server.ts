@@ -8,7 +8,11 @@ import { convertMinutesToHourString } from './utils/convert-minutes-to-hour-stri
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+  }),
+);
 
 const prisma = new PrismaClient({
   log: ['query'],
@@ -25,7 +29,11 @@ app.get('/games', async (request, response) => {
     },
   });
 
-  return response.json(games);
+  if (games.length) {
+    return response.json(games);
+  } else {
+    return response.json({ message: 'No games found' });
+  }
 });
 
 app.post('/games/:id/ads', async (request, response) => {
