@@ -34,7 +34,7 @@
 
 ## :dart: Sobre ##
 
-Aplicação desenvolvida na NLW9.0 eSports apresentada no mês de maio de 2022 com trilhas Impulse e Origin com aplicações distintas, esta é apenas o backend da aplicação impulse. A aplicação web poderá ser [acessada aqui](https://github.com/andrelinos/).
+Aplicação desenvolvida na NLW9.0 eSports apresentada no mês de setembro de 2022 com a trilha Ignite, este é apenas o backend da aplicação eSports. A aplicação web poderá ser [acessada aqui](https://github.com/andrelinos/) em breve.
 
 ## :sparkles: Funcionalidades ##
 
