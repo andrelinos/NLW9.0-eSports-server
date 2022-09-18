@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://nlw-9-0-e-sports-web.vercel.app',
   }),
 );
 
