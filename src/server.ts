@@ -9,10 +9,7 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  const allowedOrigins = [
-    'http://localhost:5173',
-    'https://e-sports-andrelinos.vercel.app',
-  ];
+  const allowedOrigins = process.env.CORS_URL || [''];
   const origin = req.headers.origin;
 
   if (origin) {
