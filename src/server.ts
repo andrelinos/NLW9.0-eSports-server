@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  const allowedOrigins = process.env.CORS_URL || [''];
+  const allowedOrigins = process.env.CORS_URL || '';
   const origin = req.headers.origin;
 
   if (origin) {
@@ -20,7 +20,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.header('Access-Control-Allow-Methods', ['GET', 'PUT', 'POST']);
   res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  // res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Credentials', 'true');
   app.use(cors());
   next();
 });
