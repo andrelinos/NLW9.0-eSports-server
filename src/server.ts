@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 
 import { PrismaClient } from '@prisma/client';
@@ -7,34 +7,32 @@ import { convertMinutesToHourString } from './utils/convert-minutes-to-hour-stri
 
 const app = express();
 app.use(express.json({ limit: '50mb' }));
-// app.use(express.json());
-// app.use(cors());
-const whiteList = [
-  'https://e-sports-andrelinos.vercel.app/*',
-  '*e-sports-andrelinos.vercel.app/*',
-  '*andrelinos.vercel.app/*',
-  'https://e-sports-andrelinos.vercel.app',
-];
-const corsOptionsDelegate = function (
-  req: any,
-  callback: (arg0: null, arg1: { origin: boolean }) => void,
-) {
-  let corsOptions;
-  if (whiteList.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true };
-  } else {
-    corsOptions = { origin: false };
-  }
-  callback(null, corsOptions);
-};
 
-app.use(cors(corsOptionsDelegate));
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://e-sports-andrelinos.vercel.app',
+  ];
+  const origin = req.headers.origin;
+
+  if (origin) {
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+  }
+  res.header('Access-Control-Allow-Methods', ['GET', 'PUT', 'POST']);
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  // res.header('Access-Control-Allow-Credentials', true);
+  app.use(cors());
+  next();
+});
 
 const prisma = new PrismaClient({
   log: ['query'],
 });
 
-app.get('/games', async (request, response) => {
+app.get('/games', async (_request, response) => {
   const games = await prisma.game.findMany({
     include: {
       _count: {
